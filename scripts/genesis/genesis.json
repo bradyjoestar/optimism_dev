@@ -1,0 +1,27 @@
+{
+  "commit": "0000000000000000000000000000000000000000",
+  "config": {
+    "chainId": 17,
+    "homesteadBlock": 0,
+    "eip150Block": 0,
+    "eip155Block": 0,
+    "eip158Block": 0,
+    "byzantiumBlock": 0,
+    "constantinopleBlock": 0,
+    "petersburgBlock": 0,
+    "istanbulBlock": 0,
+    "muirGlacierBlock": 0,
+    "berlinBlock": 0,
+    "clique": {
+      "period": 0,
+      "epoch": 30000
+    }
+  },
+  "difficulty": "1",
+  "gasLimit": "15000000",
+  "extradata": "0x000000000000000000000000000000000000000000000000000000000000000000000398232E2064F896018496b4b44b3D62751F0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "alloc": {
+    "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266": {
+      "balance": "160693804425899027554196209234116260"    }
+  }
+}
