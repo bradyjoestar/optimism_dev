@@ -1,7 +1,16 @@
 #!/bin/bash
-
-function startL1() {
+#
+function startHardhatL1() {
   docker run --net bridge -itd -p 9545:8545 --name=l1_geth ethereumoptimism/hardhat
+}
+
+
+function startLocalL1(){
+#  docker run --net bridge -it -v locall1.sh:/locall1.sh -p 8551:8545 --entrypoint "/locall1.sh" ethereum/client-go:v1.10.17
+# --entrypoint "/local/locall1.sh"
+  sudo rm -rf db
+  mkdir db
+  docker run --net bridge -itd --name=l1geth -v $PWD/local/:/local/ -v $PWD/db/:/db/ -v $PWD/genesis:/genesis -p 9545:8545  --entrypoint "/local/locall1.sh" ethereum/client-go:v1.10.17
 }
 
 function startDeployer(){
@@ -17,11 +26,11 @@ function startDtl(){
 }
 
 function startGasOracle(){
-  docker run --net bridge -itd  -e "GAS_PRICE_ORACLE_ETHEREUM_HTTP_URL=http://172.17.0.1:9545" -e "GAS_PRICE_ORACLE_LAYER_TWO_HTTP_URL=http://172.17.0.1:8545" -e "GAS_PRICE_ORACLE_PRIVATE_KEY=0x8b3a350cf5c34c9194ca85829a2df0ec3153be0318b5e2d3348e872092edffba" --name=gas-oracle ethereumoptimism/gas-oracle
+  docker run --net bridge -itd --restart unless-stopped -e "GAS_PRICE_ORACLE_ETHEREUM_HTTP_URL=http://172.17.0.1:9545" -e "GAS_PRICE_ORACLE_LAYER_TWO_HTTP_URL=http://172.17.0.1:8545" -e "GAS_PRICE_ORACLE_PRIVATE_KEY=0x8b3a350cf5c34c9194ca85829a2df0ec3153be0318b5e2d3348e872092edffba" --name=gas-oracle ethereumoptimism/gas-oracle
 }
 
 function startBatchSubmitter(){
-  docker run --net bridge -itd --env-file envs/batch-submitter.env --entrypoint "/usr/local/bin/batch-submitter.sh" --name=batch-submitter ethereumoptimism/batch-submitter-service
+  docker run --net bridge -itd --env-file envs/batch-submitter.env --restart unless-stopped --entrypoint "/usr/local/bin/batch-submitter.sh" --name=batch-submitter ethereumoptimism/batch-submitter-service
 }
 
 function startVerifier(){
@@ -40,16 +49,10 @@ function startIntegrationtest(){
   docker run --net bridge -itd --env-file envs/intergration.env --name=intergration_test --entrypoint "/opt/optimism/integration-tests/integration-tests.sh" ethereumoptimism/integration-tests
 }
 
-function startLocalL1(){
-#  docker run --net bridge -it -v locall1.sh:/locall1.sh -p 8551:8545 --entrypoint "/locall1.sh" ethereum/client-go:v1.10.17
-# --entrypoint "/local/locall1.sh"
-  sudo rm -rf db
-  mkdir db
-  docker run --net bridge -it -v $PWD/local/:/local/ -v $PWD/db/:/db/ -v $PWD/genesis:/genesis -p 8551:8545  --entrypoint "/local/locall1.sh" ethereum/client-go:v1.10.17
-}
 
-startL1
-sleep 5
+startHardhatL1
+
+sleep 10
 startDeployer
 
 sleep 5
@@ -64,15 +67,14 @@ startGasOracle
 sleep 10
 startBatchSubmitter
 
-startVerifier
-
-startReplica
-
-startReplicaHealth
+#startVerifier
+#
+#startReplica
+#
+#startReplicaHealth
 
 sleep 60
 startIntegrationtest
 
-startLocalL1
 
 #docker logs -f deployer --tail=1000
