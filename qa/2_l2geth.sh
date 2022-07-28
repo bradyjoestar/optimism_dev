@@ -17,3 +17,5 @@ function startL2(){
 
 
 buildL2Geth
+replaceEnv
+startL2
