@@ -2,3 +2,8 @@
 
 local-net/db
 qa/optimism
+
+
+envs/geth.env
+envs/dtl.env
+envs/batch-submitter.env
