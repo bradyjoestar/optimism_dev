@@ -7,6 +7,7 @@ function buildDtl(){
 
   #clean the Dockerfile
   rm -rf Dockerfile
+  cd ..
 }
 
 
