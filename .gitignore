@@ -7,3 +7,4 @@ qa/optimism
 envs/geth.env
 envs/dtl.env
 envs/batch-submitter.env
+envs/intergration.env
