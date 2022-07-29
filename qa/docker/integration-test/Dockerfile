@@ -58,7 +58,8 @@ COPY ./integration-tests ./integration-tests
 RUN yarn build
 
 
-FROM base as data-transport-layer
-WORKDIR /opt/optimism/packages/data-transport-layer
-COPY ./ops/scripts/dtl.sh .
-CMD ["node", "dist/src/services/run.js"]
+FROM base as integration-tests
+WORKDIR /opt/optimism/integration-tests
+COPY ./ops/scripts/integration-tests.sh ./
+CMD ["yarn", "test:integration"]
+
