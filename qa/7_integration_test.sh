@@ -21,3 +21,5 @@ function startIntegrationtest(){
 }
 
 buildIntegrationTest
+replaceEnv
+startIntegrationtest
