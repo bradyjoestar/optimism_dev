@@ -14,10 +14,8 @@ function replaceEnv(){
   cp -r envs/intergration.template.env envs/intergration.env
 }
 
-
-
 function startIntegrationtest(){
-  docker run --net bridge -itd --env-file envs/intergration.env --name=intergration_test --entrypoint "/opt/optimism/integration-tests/integration-tests.sh" davionlabs/integration-test
+  docker run --net bridge -itd --env-file envs/intergration.env --restart unless-stopped --name=intergration_test --entrypoint "/opt/optimism/integration-tests/integration-tests.sh" davionlabs/integration-test
 }
 
 buildIntegrationTest

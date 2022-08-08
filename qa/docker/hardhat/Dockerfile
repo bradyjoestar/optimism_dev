@@ -19,5 +19,5 @@ COPY [ "hardhat.config.js" , "/hardhat/" ]
 
 EXPOSE 8545
 
-# runs the script (assumes that the `CONTRACT` and `ARGS` are passed as args to `--envs`)
+# runs the script (assumes that the `CONTRACT` and `ARGS` are passed as args to `--env`)
 CMD ["yarn", "start"]
